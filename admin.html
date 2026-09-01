@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Administrador - Banco Demo</title>
+
+<style>
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #f3f3f3;
+
+    color: #222;
+
+}
+
+header {
+
+    background: #df2b22;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 25px 20px;
+
+}
+
+header h1 {
+
+    margin: 0 0 8px;
+
+}
+
+.contenedor {
+
+    max-width: 1100px;
+
+    margin: 30px auto;
+
+    padding: 0 20px;
+
+}
+
+/* LOGIN */
+
+.login {
+
+    max-width: 430px;
+
+    margin: 70px auto;
+
+}
+
+.login input {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    margin: 10px 0;
+
+}
+
+.login button,
+
+.control button {
+
+    background: #df2b22;
+
+    color: white;
+
+    border: 0;
+
+    padding: 13px 20px;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+.login button {
+
+    width: 100%;
+
+}
+
+.login button:hover,
+
+.control button:hover {
+
+    background: #c9221b;
+
+}
+
+.error {
+
+    color: #c00;
+
+    margin-top: 12px;
+
+}
+
+.oculto {
+
+    display: none;
+
+}
+
+/* ADMIN */
+
+.control {
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    margin-bottom: 25px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+
+}
+
+.estado {
+
+    color: #666;
+
+    margin-top: 12px;
+
+    font-size: 14px;
+
+}
+
+.seccion {
+
+    margin-bottom: 35px;
+
+}
+
+.seccion-titulo {
+
+    background: #df2b22;
+
+    color: white;
+
+    padding: 15px 20px;
+
+    border-radius: 10px;
+
+    margin-bottom: 15px;
+
+}
+
+.respuesta {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+
+}
+
+.respuesta h2 {
+
+    color: #df2b22;
+
+    margin-top: 0;
+
+}
+
+.dato {
+
+    margin-top: 20px;
+
+}
+
+.titulo {
+
+    display: block;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+
+}
+
+.texto {
+
+    background: #f5f5f5;
+
+    padding: 14px;
+
+    border-radius: 8px;
+
+    white-space: pre-wrap;
+
+    word-break: break-word;
+
+}
+
+.vacio {
+
+    text-align: center;
+
+    color: #777;
+
+    padding: 40px;
+
+}
+
+/* PIE */
+
+footer {
+
+    margin-top: 50px;
+
+    text-align: center;
+
+}
+
+.footer-blanco {
+
+    background: white;
+
+    padding: 30px 20px;
+
+    border-top: 6px solid #df2b22;
+
+}
+
+.footer-fila {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 35px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 15px;
+
+    color: #444;
+
+}
+
+.footer-rojo {
+
+    background: #df2b22;
+
+    color: white;
+
+    padding: 25px 20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>
+
+        Banco Demo
+
+    </h1>
+
+    <div>
+
+        Panel de administración — DEMOSTRACIÓN
+
+    </div>
+
+</header>
+
+<main class="contenedor">
+
+<!-- =====================================
+
+     ACCESO
+
+===================================== -->
+
+<div
+
+    id="login"
+
+    class="control login"
+
+>
+
+    <h2>
+
+        Acceso al administrador
+
+    </h2>
+
+    <p>
+
+        Ingresa la contraseña para continuar.
+
+    </p>
+
+    <input
+
+        id="password"
+
+        type="password"
+
+        placeholder="Contraseña"
+
+        autocomplete="off"
+
+    >
+
+    <button id="btnLogin">
+
+        Ingresar
+
+    </button>
+
+    <div
+
+        id="errorLogin"
+
+        class="error">
+
+    </div>
+
+</div>
+
+<!-- =====================================
+
+     ADMINISTRADOR
+
+===================================== -->
+
+<div
+
+    id="administrador"
+
+    class="oculto"
+
+>
+
+    <div class="control">
+
+        <strong id="contador">
+
+            Cargando registros...
+
+        </strong>
+
+        <br><br>
+
+        <button id="actualizar">
+
+            Actualizar respuestas
+
+        </button>
+
+        <div
+
+            id="estado"
+
+            class="estado">
+
+        </div>
+
+    </div>
+
+    <!-- ENCUESTAS -->
+
+    <section class="seccion">
+
+        <div class="seccion-titulo">
+
+            <h2 style="margin:0;">
+
+                📋 Encuestas
+
+            </h2>
+
+        </div>
+
+        <div id="contenedorEncuestas"></div>
+
+    </section>
+
+    <!-- COMENTARIOS -->
+
+    <section class="seccion">
+
+        <div class="seccion-titulo">
+
+            <h2 style="margin:0;">
+
+                💬 Comentarios finales
+
+            </h2>
+
+        </div>
+
+        <div id="contenedorComentarios"></div>
+
+    </section>
+
+</div>
+
+</main>
+
+<!-- =====================================
+
+     PIE DE PÁGINA
+
+===================================== -->
+
+<footer>
+
+    <div class="footer-blanco">
+
+        <div class="footer-fila">
+
+            <span>☎️ Aprende más</span>
+
+            <span>❓ Ayuda</span>
+
+        </div>
+
+        <div class="footer-fila">
+
+            <span>📍 Términos y condiciones</span>
+
+            <span>💬 Seguridad en línea</span>
+
+        </div>
+
+    </div>
+
+    <div class="footer-rojo">
+
+        <p style="margin:0;">
+
+            Banco Demo — Proyecto ficticio de demostración © 2026
+
+        </p>
+
+    </div>
+
+</footer>
+
+<script>
+
+/* =====================================
+
+   CONTRASEÑA DEL DEMO
+
+===================================== */
+
+const PASSWORD_ADMIN = "amer8292";
+
+/* =====================================
+
+   ELEMENTOS
+
+===================================== */
+
+const login =
+
+    document.getElementById("login");
+
+const administrador =
+
+    document.getElementById("administrador");
+
+const password =
+
+    document.getElementById("password");
+
+const errorLogin =
+
+    document.getElementById("errorLogin");
+
+const contador =
+
+    document.getElementById("contador");
+
+const estado =
+
+    document.getElementById("estado");
+
+const contenedorEncuestas =
+
+    document.getElementById(
+
+        "contenedorEncuestas"
+
+    );
+
+const contenedorComentarios =
+
+    document.getElementById(
+
+        "contenedorComentarios"
+
+    );
+
+/* =====================================
+
+   ESCAPAR TEXTO
+
+===================================== */
+
+function escapar(texto) {
+
+    const div =
+
+        document.createElement("div");
+
+    div.textContent =
+
+        texto == null
+
+            ? ""
+
+            : String(texto);
+
+    return div.innerHTML;
+
+}
+
+/* =====================================
+
+   INGRESAR
+
+===================================== */
+
+function ingresar() {
+
+    if (
+
+        password.value ===
+
+        PASSWORD_ADMIN
+
+    ) {
+
+        errorLogin.textContent = "";
+
+        login.classList.add(
+
+            "oculto"
+
+        );
+
+        administrador.classList.remove(
+
+            "oculto"
+
+        );
+
+        cargarRespuestas();
+
+    } else {
+
+        errorLogin.textContent =
+
+            "Contraseña incorrecta.";
+
+        password.value = "";
+
+        password.focus();
+
+    }
+
+}
+
+/* =====================================
+
+   BOTÓN LOGIN
+
+===================================== */
+
+document
+
+.getElementById("btnLogin")
+
+.addEventListener(
+
+    "click",
+
+    ingresar
+
+);
+
+/* =====================================
+
+   ENTER
+
+===================================== */
+
+password.addEventListener(
+
+    "keydown",
+
+    function(event) {
+
+        if (
+
+            event.key === "Enter"
+
+        ) {
+
+            ingresar();
+
+        }
+
+    }
+
+);
+
+/* =====================================
+
+   CARGAR RESPUESTAS
+
+===================================== */
+
+async function cargarRespuestas() {
+
+    estado.textContent =
+
+        "Actualizando registros...";
+
+    try {
+
+        const respuestaEncuestas =
+
+            await fetch(
+
+                "/api/encuesta-demo"
+
+            );
+
+        if (
+
+            !respuestaEncuestas.ok
+
+        ) {
+
+            throw new Error(
+
+                "Error al obtener encuestas."
+
+            );
+
+        }
+
+        const encuestas =
+
+            await respuestaEncuestas.json();
+
+        const respuestaComentarios =
+
+            await fetch(
+
+                "/api/comentario-demo"
+
+            );
+
+        if (
+
+            !respuestaComentarios.ok
+
+        ) {
+
+            throw new Error(
+
+                "Error al obtener comentarios."
+
+            );
+
+        }
+
+        const comentarios =
+
+            await respuestaComentarios.json();
+
+        mostrarEncuestas(
+
+            encuestas
+
+        );
+
+        mostrarComentarios(
+
+            comentarios
+
+        );
+
+        contador.textContent =
+
+            "Encuestas: " +
+
+            encuestas.length +
+
+            " | Comentarios: " +
+
+            comentarios.length;
+
+        estado.textContent =
+
+            "Registros actualizados correctamente.";
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        contador.textContent =
+
+            "No se pudieron cargar los registros.";
+
+        estado.textContent =
+
+            "Verifica que el servidor esté funcionando.";
+
+        contenedorEncuestas.innerHTML = `
+
+            <div class="respuesta vacio">
+
+                No se pudieron cargar las encuestas.
+
+            </div>
+
+        `;
+
+        contenedorComentarios.innerHTML = `
+
+            <div class="respuesta vacio">
+
+                No se pudieron cargar los comentarios.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+/* =====================================
+
+   MOSTRAR ENCUESTAS
+
+===================================== */
+
+function mostrarEncuestas(datos) {
+
+    if (
+
+        !Array.isArray(datos) ||
+
+        datos.length === 0
+
+    ) {
+
+        contenedorEncuestas.innerHTML = `
+
+            <div class="respuesta vacio">
+
+                Todavía no hay encuestas registradas.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    contenedorEncuestas.innerHTML = "";
+
+    datos
+
+    .slice()
+
+    .reverse()
+
+    .forEach(
+
+        (item, indice) => {
+
+            const tarjeta =
+
+                document.createElement("div");
+
+            tarjeta.className =
+
+                "respuesta";
+
+            tarjeta.innerHTML = `
+
+                <h2>
+
+                    Encuesta #${
+
+                        datos.length - indice
+
+                    }
+
+                </h2>
+
+                <div class="dato">
+
+                    <span class="titulo">
+
+                        Fecha:
+
+                    </span>
+
+                    <div class="texto">
+
+                        ${escapar(item.fecha)}
+
+                    </div>
+
+                </div>
+
+                <div class="dato">
+
+                    <span class="titulo">
+
+                        Folio:
+
+                    </span>
+
+                    <div class="texto">
+
+                        ${escapar(item.folio)}
+
+                    </div>
+
+                </div>
+
+                <div class="dato">
+
+                    <span class="titulo">
+
+                        Pregunta 1:
+
+                    </span>
+
+                    <div class="texto">
+
+                        ${escapar(item.respuesta1)}
+
+                    </div>
+
+                </div>
+
+                <div class="dato">
+
+                    <span class="titulo">
+
+                        Pregunta 2:
+
+                    </span>
+
+                    <div class="texto">
+
+                        ${escapar(item.respuesta2)}
+
+                    </div>
+
+                </div>
+
+                <div class="dato">
+
+                    <span class="titulo">
+
+                        ¿Qué te pareció la demostración?
+
+                    </span>
+
+                    <div class="texto">
+
+                        ${escapar(item.tarjeta)}
+
+                    </div>
+
+                </div>
+
+            `;
+
+            contenedorEncuestas
+
+            .appendChild(
+
+                tarjeta
+
+            );
+
+        }
+
+    );
+
+}
+
+/* =====================================
+
+   MOSTRAR COMENTARIOS
+
+===================================== */
+
+function mostrarComentarios(datos) {
+
+    if (
+
+        !Array.isArray(datos) ||
+
+        datos.length === 0
+
+    ) {
+
+        contenedorComentarios.innerHTML = `
+
+            <div class="respuesta vacio">
+
+                Todavía no hay comentarios registrados.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    contenedorComentarios.innerHTML = "";
+
+    datos
+
+    .slice()
+
+    .reverse()
+
+    .forEach(
+
+        (item, indice) => {
+
+            const tarjeta =
+
+                document.createElement("div");
+
+            tarjeta.className =
+
+                "respuesta";
+
+            tarjeta.innerHTML = `
+
+                <h2>
+
+                    Comentario #${
+
+                        datos.length - indice
+
+                    }
+
+                </h2>
+
+                <div class="dato">
+
+                    <span class="titulo">
+
+                        Fecha:
+
+                    </span>
+
+                    <div class="texto">
+
+                        ${escapar(item.fecha)}
+
+                    </div>
+
+                </div>
+
+                <div class="dato">
+
+                    <span class="titulo">
+
+                        Folio:
+
+                    </span>
+
+                    <div class="texto">
+
+                        ${escapar(item.folio)}
+
+                    </div>
+
+                </div>
+
+                <div class="dato">
+
+                    <span class="titulo">
+
+                        Comentario final:
+
+                    </span>
+
+                    <div class="texto">
+
+                        ${escapar(item.comentario)}
+
+                    </div>
+
+                </div>
+
+            `;
+
+            contenedorComentarios
+
+            .appendChild(
+
+                tarjeta
+
+            );
+
+        }
+
+    );
+
+}
+
+/* =====================================
+
+   ACTUALIZAR
+
+===================================== */
+
+document
+
+.getElementById("actualizar")
+
+.addEventListener(
+
+    "click",
+
+    cargarRespuestas
+
+);
+
+</script>
+<!-- ================================
+
+     ASISTENTE VIRTUAL DEMO
+
+================================= -->
+
+<button id="botonAsistente" class="boton-asistente" aria-label="Abrir asistente">
+
+    💬
+
+</button>
+
+<div id="ventanaAsistente" class="ventana-asistente oculto">
+
+    <div class="encabezado-asistente">
+
+        <strong>Asistente Demo</strong>
+
+        <button id="cerrarAsistente">×</button>
+
+    </div>
+
+    <div class="contenido-asistente">
+
+        <p><strong>Hola 👋</strong></p>
+
+        <p>¿En qué podemos ayudarte?</p>
+
+        <button class="opcion-asistente">
+
+            ¿Cómo funciona la demostración?
+
+        </button>
+
+        <button class="opcion-asistente">
+
+            ¿Dónde ingreso mi folio?
+
+        </button>
+
+        <button class="opcion-asistente">
+
+            ¿Qué sigue después de la encuesta?
+
+        </button>
+
+        <button class="opcion-asistente">
+
+            Necesito ayuda
+
+        </button>
+
+        <div id="respuestaAsistente" class="respuesta-asistente"></div>
+
+    </div>
+
+</div>
+
+<style>
+
+/* BOTÓN FLOTANTE */
+
+.boton-asistente {
+
+    position: fixed;
+
+    right: 22px;
+
+    bottom: 22px;
+
+    width: 62px;
+
+    height: 62px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: #df2b22;
+
+    color: white;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 18px rgba(0,0,0,.25);
+
+    z-index: 9999;
+
+}
+
+/* VENTANA */
+
+.ventana-asistente {
+
+    position: fixed;
+
+    right: 22px;
+
+    bottom: 95px;
+
+    width: 330px;
+
+    max-width: calc(100vw - 40px);
+
+    background: white;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 8px 30px rgba(0,0,0,.25);
+
+    z-index: 10000;
+
+}
+
+/* ENCABEZADO */
+
+.encabezado-asistente {
+
+    background: #df2b22;
+
+    color: white;
+
+    padding: 16px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: 17px;
+
+}
+
+.encabezado-asistente button {
+
+    background: transparent;
+
+    color: white;
+
+    padding: 0;
+
+    font-size: 26px;
+
+}
+
+/* CONTENIDO */
+
+.contenido-asistente {
+
+    padding: 18px;
+
+    color: #222;
+
+}
+
+.contenido-asistente p {
+
+    margin: 6px 0;
+
+}
+
+/* OPCIONES */
+
+.opcion-asistente {
+
+    width: 100%;
+
+    margin-top: 9px;
+
+    padding: 11px;
+
+    background: #f5f5f5;
+
+    color: #333;
+
+    border: 1px solid #ddd;
+
+    border-radius: 9px;
+
+    text-align: left;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+}
+
+.opcion-asistente:hover {
+
+    background: #eeeeee;
+
+}
+
+/* RESPUESTA */
+
+.respuesta-asistente {
+
+    margin-top: 14px;
+
+    padding: 12px;
+
+    background: #f5f5f5;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    display: none;
+
+}
+
+/* OCULTO */
+
+.oculto {
+
+    display: none !important;
+
+}
+
+</style>
+
+<script>
+
+/* ================================
+
+   FUNCIONES DEL ASISTENTE
+
+================================= */
+
+const botonAsistente =
+
+    document.getElementById("botonAsistente");
+
+const ventanaAsistente =
+
+    document.getElementById("ventanaAsistente");
+
+const cerrarAsistente =
+
+    document.getElementById("cerrarAsistente");
+
+const respuestaAsistente =
+
+    document.getElementById("respuestaAsistente");
+
+botonAsistente.addEventListener("click", () => {
+
+    ventanaAsistente.classList.toggle("oculto");
+
+});
+
+cerrarAsistente.addEventListener("click", () => {
+
+    ventanaAsistente.classList.add("oculto");
+
+});
+
+document.querySelectorAll(".opcion-asistente")
+
+.forEach((boton) => {
+
+    boton.addEventListener("click", () => {
+
+        const pregunta = boton.textContent.trim();
+
+        respuestaAsistente.style.display = "block";
+
+        if (pregunta.includes("funciona")) {
+
+            respuestaAsistente.textContent =
+
+                "Esta es una demostración. Sigue los pasos que aparecen en pantalla para continuar.";
+
+        } else if (pregunta.includes("folio")) {
+
+            respuestaAsistente.textContent =
+
+                "Ingresa tu folio en la primera pantalla y selecciona el botón Ingresar.";
+
+        } else if (pregunta.includes("encuesta")) {
+
+            respuestaAsistente.textContent =
+
+                "Después de completar la encuesta podrás continuar con el comentario final.";
+
+        } else {
+
+            respuestaAsistente.textContent =
+
+                "Estamos para ayudarte durante esta demostración.";
+
+        }
+
+    });
+
+});
+
+</script>
+</body>
+
+</html>
